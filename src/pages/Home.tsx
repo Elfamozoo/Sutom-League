@@ -7,7 +7,6 @@ const Home = () => {
     return (
         <>
             <SignUp />
-            <h1>fkjdkdn</h1>
         </>
     )
 

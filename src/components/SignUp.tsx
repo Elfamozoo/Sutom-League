@@ -1,6 +1,6 @@
 import React from 'react';
 import "../styles/Home.css";
-import { registerWithEmailAndPassword, logInWithEmailAndPassword } from '../firebase-config'
+import { registerWithEmailAndPassword } from '../firebase-config'
 import { TextInput, PasswordInput, Button, Group, Box } from '@mantine/core';
 import { useForm } from '@mantine/form';
 
@@ -17,9 +17,10 @@ const SignUp = () => {
         validate: {
             login: (value: any) => value.length < 3 ? 'Pseudo trop court' : null,
             email: (value: any) => (/^\S+@\S+$/.test(value) ? null : 'Mail invalide'),
-            Password: (value: any) => (/^(.{0,7}|[^a-z]{1,}|[^A-Z]{1,}|[^\d]{1,}|[^\W]{1,})$|[\s]/.test(value) ? 'Mot de passe invalide' : null),
+            Password: (value: any) => (/(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@$!%*#?&^_-]).{8,}/.test(value) ? 'Mot de passe invalide' : null),
         },
     });
+
 
     return (
         <>
@@ -52,7 +53,7 @@ const SignUp = () => {
                         <Button type="submit">S'inscrire</Button>
                     </Group>
                 </form>
-            </Box>
+            </Box >
         </>
     )
 

@@ -1,4 +1,5 @@
 import React from 'react';
+import { logInWithEmailAndPassword } from '../firebase-config'
 import "../styles/Home.css";
 import { TextInput, PasswordInput, Button, Group, Box } from '@mantine/core';
 import { useForm } from '@mantine/form';
@@ -16,7 +17,7 @@ const Login = () => {
     return (
         <>
             <Box sx={{ maxWidth: 300 }} mx="auto">
-                <form onSubmit={form.onSubmit((values) => console.log(values))}>
+                <form onSubmit={form.onSubmit((values) => logInWithEmailAndPassword(values.email, values.password))}>
                     <TextInput
                         required
                         label="Email"
