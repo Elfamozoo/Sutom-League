@@ -9,7 +9,6 @@ import {
     createUserWithEmailAndPassword,
     sendPasswordResetEmail,
     signOut,
-
 } from "firebase/auth";
 import {
     getFirestore,
@@ -39,8 +38,29 @@ const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
 const auth = getAuth(app);
 const db = getFirestore(app);
-export { auth } 
+const googleProvider = new GoogleAuthProvider();
 
+
+
+export const signInWithGoogle = async () => {
+    try {
+        const res = await signInWithPopup(auth, googleProvider);
+        const user = res.user;
+        const q = query(collection(db, "users"), where("uid", "==", user.uid));
+        const docs = await getDocs(q);
+        if (docs.docs.length === 0) {
+            await addDoc(collection(db, "users"), {
+                uid: user.uid,
+                name: user.displayName,
+                authProvider: "google",
+                email: user.email,
+            });
+        }
+    } catch (err: any) {
+        console.error(err);
+        alert(err.message);
+    }
+};
 
 export const registerWithEmailAndPassword = async (login: any, email: string, password: string) => {
     try {
@@ -67,4 +87,17 @@ export const logInWithEmailAndPassword = async (email: any, password: any) => {
     }
 };
 
+export const sendPasswordReset = async (email: any) => {
+    try {
+        await sendPasswordResetEmail(auth, email);
+        alert("Reset Mot de passe envoyé ");
+    } catch (err: any) {
+        console.error(err);
+        alert(err.message);
+    }
+};
+
+export const logout = () => {
+    signOut(auth);
+};
 

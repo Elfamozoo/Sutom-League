@@ -1,6 +1,6 @@
 import React from 'react';
 import "../styles/Home.css";
-import { registerWithEmailAndPassword } from '../firebase-config'
+import { registerWithEmailAndPassword, signInWithGoogle } from '../firebase-config'
 import { TextInput, PasswordInput, Button, Group, Box } from '@mantine/core';
 import { useForm } from '@mantine/form';
 
@@ -49,8 +49,9 @@ const SignUp = () => {
                     />
 
 
-                    <Group position="right" mt="md">
+                    <Group position="center" mt="md">
                         <Button type="submit">S'inscrire</Button>
+                        <Button onClick={signInWithGoogle} type="submit">Google</Button>
                     </Group>
                 </form>
             </Box >
